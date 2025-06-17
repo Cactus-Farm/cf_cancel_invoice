@@ -1,5 +1,9 @@
+import logging
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
+
+
+_logger = logging.getLogger(__name__)
 
 
 class AccountMoveCF(models.Model):
@@ -8,6 +12,9 @@ class AccountMoveCF(models.Model):
     def cf_action_cancel_invoice(self):
         """Apre il wizard di cancellazione"""
         self.ensure_one()
+
+        demo_mode = self.env['ir.config_parameter'].sudo().get_param('edi.demo_mode')
+        _logger.warning("DEMO_MODE PARAM VALUE: %s", demo_mode)
         
         # Controllo permessi - solo admin contabilità
         if not self.env.user.has_group('account.group_account_manager'):
@@ -18,8 +25,9 @@ class AccountMoveCF(models.Model):
             raise UserError(_("Solo le fatture validate possono essere cancellate con questo metodo."))
         
         # Controllo SDI
-        if self.l10n_it_edi_transaction_ids.filtered(lambda t: t.state == 'sent'):
-            raise UserError(_("⚠️ Fattura già trasmessa allo SDI! Cancellazione non permessa."))
+        if demo_mode not in ['True', '1', True]:
+            if self.l10n_it_edi_transaction and self.l10n_it_edi_transaction.strip():
+                raise UserError(_("⚠️ Fattura già trasmessa allo SDI! Cancellazione non permessa."))
         
         # Controllo pagamenti
         if self.payment_state in ('paid', 'partial'):
