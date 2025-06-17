@@ -44,17 +44,18 @@
         </field>
     </record>
     
-    <!-- Menu -->
+    <!-- Action PRIMA del Menu -->
+    <record id="cf_cancel_log_action" model="ir.actions.act_window">
+        <field name="name">CF Cancel Log</field>
+        <field name="res_model">cf.cancel.log</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <!-- Menu DOPO l'Action -->
     <menuitem id="cf_cancel_log_menu" 
               name="CF Cancel Log" 
               parent="account.menu_finance_reports"
               action="cf_cancel_log_action"
               groups="account.group_account_manager"
               sequence="99"/>
-              
-    <record id="cf_cancel_log_action" model="ir.actions.act_window">
-        <field name="name">CF Cancel Log</field>
-        <field name="res_model">cf.cancel.log</field>
-        <field name="view_mode">tree,form</field>
-    </record>
 </odoo>
