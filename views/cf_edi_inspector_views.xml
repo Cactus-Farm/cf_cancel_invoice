@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista per EDI Inspector -->
+    <record id="cf_edi_inspector_form" model="ir.ui.view">
+        <field name="name">cf.edi.inspector.form</field>
+        <field name="model">cf.edi.inspector</field>
+        <field name="arch" type="xml">
+            <form string="CF EDI Inspector">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="inspect_edi_documents_cron" 
+                                type="object" 
+                                string="Run Inspection Now" 
+                                class="btn-primary"
+                                icon="fa-search"/>
+                    </div>
+                    
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    
+                    <div class="alert alert-info">
+                        <h4>EDI Inspector</h4>
+                        <p>Questo strumento ispeziona automaticamente i documenti EDI delle fatture validate.</p>
+                        <ul>
+                            <li><strong>Cron automatico:</strong> Ogni 6 ore</li>
+                            <li><strong>Scope:</strong> Fatture degli ultimi 30 giorni</li>
+                            <li><strong>Log:</strong> Controlla i log di Odoo per i dettagli</li>
+                        </ul>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <!-- Action -->
+    <record id="cf_edi_inspector_action_form" model="ir.actions.act_window">
+        <field name="name">CF EDI Inspector</field>
+        <field name="res_model">cf.edi.inspector</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+    </record>
+    
+    <!-- Menu -->
+    <menuitem id="cf_edi_inspector_menu" 
+              name="CF EDI Inspector" 
+              parent="account.menu_finance_reports"
+              action="cf_edi_inspector_action_form"
+              groups="account.group_account_manager"
+              sequence="98"/>
+</odoo>

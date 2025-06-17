@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Cron Job per EDI Inspector -->
+    <record id="cf_edi_inspector_cron" model="ir.cron">
+        <field name="name">CF EDI Inspector</field>
+        <field name="model_id" ref="model_cf_edi_inspector"/>
+        <field name="state">code</field>
+        <field name="code">model.inspect_edi_documents_cron()</field>
+        <field name="interval_number">6</field>
+        <field name="interval_type">hours</field>
+        <field name="numbercall">-1</field>
+        <field name="active">True</field>
+        <field name="user_id" ref="base.user_admin"/>
+    </record>
+    
+    <!-- Action per eseguire manualmente -->
+    <record id="cf_edi_inspector_action" model="ir.actions.server">
+        <field name="name">Run EDI Inspector Now</field>
+        <field name="model_id" ref="model_cf_edi_inspector"/>
+        <field name="binding_model_id" ref="model_cf_edi_inspector"/>
+        <field name="state">code</field>
+        <field name="code">
+records.inspect_edi_documents_cron()
+        </field>
+    </record>
+</odoo>
