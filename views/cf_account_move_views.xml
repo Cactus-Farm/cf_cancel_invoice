@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Aggiungi bottone alla vista fattura -->
+    <record id="cf_view_move_form_inherit" model="ir.ui.view">
+        <field name="name">cf.account.move.form.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <button name="button_cancel" position="after">
+                <button name="cf_action_cancel_invoice" 
+                        type="object" 
+                        string="CF Cancel" 
+                        class="btn-danger"
+                        groups="account.group_account_manager"
+                        attrs="{'invisible': ['|', ('state', '!=', 'posted'), ('move_type', 'not in', ['out_invoice', 'in_invoice', 'out_refund', 'in_refund'])]}"
+                        confirm="⚠️ ATTENZIONE: Stai per cancellare definitivamente questa fattura. Continuare?"/>
+            </button>
+        </field>
+    </record>
+</odoo>

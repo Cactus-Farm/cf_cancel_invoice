@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="cf_cancel_wizard_form" model="ir.ui.view">
+        <field name="name">cf.cancel.wizard.form</field>
+        <field name="model">cf.cancel.wizard</field>
+        <field name="arch" type="xml">
+            <form string="CF Cancel Invoice">
+                <div class="alert alert-danger" role="alert">
+                    <h4 class="alert-heading">⚠️ Attenzione!</h4>
+                    <p>Stai per cancellare definitivamente questa fattura. 
+                       Questa operazione NON può essere annullata.</p>
+                </div>
+                
+                <group>
+                    <group>
+                        <field name="invoice_name"/>
+                        <field name="invoice_amount"/>
+                        <field name="currency_id" invisible="1"/>
+                    </group>
+                </group>
+                
+                <group>
+                    <field name="reason" placeholder="Es: Fattura di test creata per errore..."/>
+                    <field name="confirm"/>
+                </group>
+                
+                <footer>
+                    <button name="cf_confirm_cancel" 
+                            type="object" 
+                            string="Cancella Fattura" 
+                            class="btn-danger"
+                            attrs="{'invisible': [('confirm', '=', False)]}"/>
+                    <button string="Annulla" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
